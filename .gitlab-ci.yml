@@ -18,13 +18,7 @@ black:
 tests:
     stage: test
     image: python:3-slim
-    cache:
-        paths:
-            - .cache/pip
     script:
-        - apt-get update
-        - apt-get install gettext -y
         - pip install -r requirements/test.txt
-        - cd lyceum
-        - django-admin compilemessages
+        - cd tracker
         - python manage.py test
