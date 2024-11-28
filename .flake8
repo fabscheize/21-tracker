@@ -1,0 +1,35 @@
+[flake8]
+exclude =
+    venv/*
+    *.venv/*
+    __pycache__/*
+    .git/*
+    */migrations/*
+require-plugins =
+    flake8-adjustable-complexity
+    flake8-bugbear
+    flake8-builtins
+    flake8-clean-block
+    flake8-cognitive-complexity
+    flake8-commas
+    flake8-comprehensions
+    flake8-dunder-all
+    flake8-eradicate
+    flake8-expression-complexity
+    flake8-fixme
+    flake8-functions
+    flake8-import-order
+    flake8-import-style
+    flake8-pie
+    flake8-print
+    flake8-quotes
+    flake8-scream
+    flake8-simplify
+    flake8-use-pathlib
+    pep8-naming
+application-import-names =
+    tracker
+import-order-style = google
+ignore =
+    W503
+inline-quotes = "

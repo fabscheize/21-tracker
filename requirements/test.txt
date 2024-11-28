@@ -1,0 +1,25 @@
+-r prod.txt
+django-debug-toolbar==4.4.6
+flake8==7.1.1
+flake8-adjustable-complexity==0.0.6
+flake8-bugbear==24.8.19
+flake8-builtins==2.5.0
+flake8-clean-block==0.1.2
+flake8-cognitive-complexity==0.1.0
+flake8-commas==4.0.0
+flake8-comprehensions==3.15.0
+flake8-dunder-all==0.4.1
+flake8-eradicate==1.5.0
+flake8-expression-complexity==0.0.11
+flake8-fixme==1.1.1
+flake8-functions==0.0.7
+flake8-import-order==0.18.2
+flake8-import-style==0.5.0
+flake8-pie==0.16.0
+flake8-print==5.0.0
+flake8-quotes==3.4.0
+flake8-scream==0.1.0
+flake8-simplify==0.19.3
+flake8-use-pathlib==0.3.0
+parametrize==0.1.1
+pep8-naming==0.14.1

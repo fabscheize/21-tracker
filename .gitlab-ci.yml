@@ -1,0 +1,30 @@
+stages:
+    - linting
+    - test
+
+flake8:
+    stage: linting
+    image: registry.gitlab.com/pipeline-components/flake8:latest
+    script:
+        - pip install -r requirements/test.txt
+        - flake8 --verbose .
+
+black:
+    stage: linting
+    image: registry.gitlab.com/pipeline-components/black:latest
+    script:
+        - black --check --diff .
+
+tests:
+    stage: test
+    image: python:3-slim
+    cache:
+        paths:
+            - .cache/pip
+    script:
+        - apt-get update
+        - apt-get install gettext -y
+        - pip install -r requirements/test.txt
+        - cd lyceum
+        - django-admin compilemessages
+        - python manage.py test

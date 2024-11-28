@@ -1,0 +1,5 @@
+Django==4.2.16
+django-cleanup==9.0.0
+environs==11.0.0
+pillow==11.0.0
+sorl-thumbnail==12.11.0
