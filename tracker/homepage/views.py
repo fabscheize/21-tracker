@@ -5,4 +5,4 @@ __all__ = ()
 
 
 class HomepageView(django.views.generic.TemplateView):
-    pass
+    template_name = "homepage/main_data.html"
