@@ -5,8 +5,10 @@ import django.urls
 __all__ = ()
 
 path = django.urls.path
+include = django.urls.include
 
 urlpatterns = [
+    path("", include("homepage.urls", namespace="homepage")),
     path("admin/", django.contrib.admin.site.urls),
 ]
 

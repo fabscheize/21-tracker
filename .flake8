@@ -29,6 +29,7 @@ require-plugins =
     pep8-naming
 application-import-names =
     tracker
+    homepage
 import-order-style = google
 ignore =
     W503
