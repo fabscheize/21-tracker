@@ -30,6 +30,7 @@ require-plugins =
 application-import-names =
     tracker
     homepage
+    users
 import-order-style = google
 ignore =
     W503

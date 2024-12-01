@@ -23,6 +23,10 @@ ALLOWED_HOSTS = list(
     filter(None, os.getenv("DJANGO_ALLOWED_HOSTS", "").lower().split(",")),
 )
 
+AUTH_USER_MODEL = "users.User"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/auth/login"
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -32,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "homepage.apps.HomepageConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -107,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "UTC"
 
