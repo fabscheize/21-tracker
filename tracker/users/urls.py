@@ -65,4 +65,9 @@ urlpatterns = [
         users.views.SignupViewForm.as_view(),
         name="signup",
     ),
+    django.urls.path(
+        "activate/<str:username>/<str:token>/",
+        users.views.ActiveView.as_view(),
+        name="activate",
+    ),
 ]

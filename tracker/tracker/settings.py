@@ -23,6 +23,8 @@ ALLOWED_HOSTS = list(
     filter(None, os.getenv("DJANGO_ALLOWED_HOSTS", "").lower().split(",")),
 )
 
+DJANGO_MAIL = os.getenv("DJANGO_MAIL", "basic@gmail.com").lower()
+
 AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/auth/login"
@@ -123,5 +125,10 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+EMAIL_FILE_PATH = BASE_DIR / "send_mail"
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
