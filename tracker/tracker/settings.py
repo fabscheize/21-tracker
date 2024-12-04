@@ -25,10 +25,19 @@ ALLOWED_HOSTS = list(
 
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "basic@gmail.com").lower()
 
+MAX_AUTH_ATTEMPTS = int(os.getenv("MAX_AUTH_ATTEMPTS", 3))
+
+DEFAULT_USER_IS_ACTIVE = is_true(
+    os.getenv(
+        "DJANGO_DEFAULT_USER_IS_ACTIVE",
+        "False",
+    ),
+)
+
+
 AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/auth/login"
-
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -113,6 +122,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    "users.backends.CustomBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 LANGUAGE_CODE = "ru-RU"
 

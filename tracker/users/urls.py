@@ -70,4 +70,9 @@ urlpatterns = [
         users.views.ActiveView.as_view(),
         name="activate",
     ),
+    django.urls.path(
+        "reactivate/<str:username>/<str:token>/",
+        users.views.ReActiveView.as_view(),
+        name="re-activate",
+    ),
 ]

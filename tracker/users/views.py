@@ -34,7 +34,7 @@ class SignupViewForm(django.views.generic.FormView):
             return self.form_invalid(form)
 
         user = form.save(commit=False)
-        user.is_active = False
+        user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
         user.save()
 
         activation_url = self.request.build_absolute_uri(
@@ -67,11 +67,29 @@ class ActiveView(django.views.generic.base.View):
         if not activation_token.check_token(user, token):
             return django.shortcuts.HttpResponse(_("Неверный токен."))
 
-        elif time_elapsed > django.utils.timezone.timedelta(hours=24):
+        elif time_elapsed > django.utils.timezone.timedelta(hours=7):
             return django.shortcuts.HttpResponse(
                 _("Ссылка активации истекла."),
             )
 
         user.is_active = True
+        user.save()
+        return django.shortcuts.redirect("users:login")
+
+
+class ReActiveView(django.views.generic.base.View):
+    def get(self, request, username, token):
+        user = user_model.objects.get(username=username)
+        time_elapsed = django.utils.timezone.now() - user.block_date
+        if not activation_token.check_token(user, token):
+            return django.shortcuts.HttpResponse(_("Неверный токен."))
+
+        elif time_elapsed > django.utils.timezone.timedelta(days=7):
+            return django.shortcuts.HttpResponse(
+                _("Ссылка активации истекла."),
+            )
+
+        user.is_active = True
+        user.attempts_count = 0
         user.save()
         return django.shortcuts.redirect("users:login")
