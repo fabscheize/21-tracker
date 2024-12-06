@@ -1,0 +1,52 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Боковая панель -->
+<div class="offcanvas-lg offcanvas-start"  tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel" style="max-width: 260px;">
+  <div class="offcanvas-header mx-2">
+    <img src="{% static 'img/logo.png' %}" alt="21" width="50" height="50">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Закрыть"></button>
+  </div>
+
+  <div class="offcanvas-body" style="min-width: 260px;">
+    <ul class="navbar-nav flex-column my-3 left-panel">
+      {% with request.resolver_match.view_name as view_name %}
+        <li class="nav-item">
+          {% if view_name == 'habits:list' %}
+            <a class="nav-link active disabled" aria-current="page">
+              <i class="bi-grid-fill icon-active mx-2"></i>
+          {% else %}
+            <a class="nav-link secondary-color" href="{% url "habits:list" %}">
+              <i class="bi-grid-fill icon-disabled mx-2"></i>
+          {% endif %}
+              {% translate "Мои привычки" %}
+            </a>
+        </li>
+
+        <li class="nav-item">
+          {% if view_name == 'habits:progress' %}
+            <a class="nav-link active disabled" aria-current="page">
+              <i class="bi-pie-chart-fill icon-active mx-2"></i>
+          {% else %}
+            <a class="nav-link secondary-color" href="#">
+              <i class="bi-pie-chart-fill icon-disabled mx-2"></i>
+          {% endif %}
+              {% translate "Прогресс" %}
+            </a>
+        </li>
+
+        <li class="nav-item">
+          {% if view_name == 'users:settings' %}
+            <a class="nav-link active disabled" aria-current="page">
+              <i class="bi-gear-fill icon-active mx-2"></i>
+          {% else %}
+            <a class="nav-link secondary-color" href="#">
+              <i class="bi-gear-fill icon-disabled mx-2"></i>
+          {% endif %}
+              {% translate "Настройки" %}
+            </a>
+        </li>
+      {% endwith %}
+    </ul>
+  </div>
+</div>

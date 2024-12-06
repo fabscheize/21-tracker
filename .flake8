@@ -29,6 +29,7 @@ require-plugins =
     pep8-naming
 application-import-names =
     tracker
+    habits
     homepage
     users
 import-order-style = google

@@ -1,0 +1,93 @@
+$primary: rgb(108, 180, 180);
+$primary_l: #{lighten($primary, 15%)};
+$secondary: rgb(87, 87, 87);
+
+/* lg-экраны */
+@media (min-width: 992px) {
+  .hero-text {
+    font-size: 3em;
+  }
+
+  .hero-btn {
+    --bs-btn-padding-y: .75rem;
+    --bs-btn-padding-x: 2rem;
+    --bs-btn-font-size: 1.2rem;
+  }
+
+  .left-panel {
+    margin-left: 10px;
+  }
+}
+
+/* sm-экраны */
+@media (max-width: 991px) {
+  .hero-text {
+    font-size: 2em;
+  }
+
+  .hero-btn {
+    --bs-btn-padding-y: .5rem;
+    --bs-btn-padding-x: 1.5rem;
+    --bs-btn-font-size: 1rem;
+  }
+}
+
+.left-panel {
+  font-size: 1.5em;
+}
+
+.navbar {
+  height: 90px;
+}
+
+.menu-btn {
+  width: 60px;
+  height: 60px;
+  --bs-btn-padding-x: 0;
+  font-size: 3em;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0;
+  line-height: 1;
+}
+
+// .offcanvas-lg {
+//   top: 0;
+//   left: 0;
+//   width: 250px;
+//   height: 100vh;
+//   z-index: 1050;
+//   background-color: rgb(248, 249, 250);
+// }
+
+.prime-color {
+  color: #{$primary};
+}
+
+.darker-prime-color {
+  color: #{$primary_l};
+}
+
+.secondary-color {
+  color: #{$secondary};
+}
+
+.hero-btn {
+  --bs-btn-bg: #{$primary};
+  --bs-btn-border-color: #{$primary};
+  --bs-btn-hover-bg: #{darken($primary, 10%)};
+  --bs-btn-hover-border-color: #{darken($primary, 10%)};
+  --bs-btn-active-bg: #{darken($primary, 20%)};
+  --bs-btn-active-border-color: #{darken($primary, 20%)};
+}
+
+.icon-active {
+  font-size: 1em;
+  color: #{$primary};
+}
+
+.icon-disabled {
+  font-size: 1em;
+  color: #{$primary_l};
+}

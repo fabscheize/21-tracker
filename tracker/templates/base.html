@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 
+{% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/x-icon" href="{% static 'img/fav/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/fav/favicon-96x96.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/fav/apple-touch-icon.png' %}">
+
     <title>{% block title %}21{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
   </head>
-  <body>
-    {% include 'includes/header.html' %}
-      {% block content %}Контента нет{% endblock %}
+
+  <body class="d-flex flex-column min-vh-100">
+    {% include "includes/header.html" %}
+
+    <main class="flex-grow-1">
+      <div class="d-flex">
+        {% if request.user.is_authenticated %}
+          {% include "includes/sidebar.html" %}
+        {% endif %}
+
+        <!-- Контент -->
+        <div class="container-fluid">
+          {% block content %}
+            <p>{% translate "Калтент" %}</p>
+          {% endblock %}
+        </div>
+      </div>
     </main>
-    {% include 'includes/footer.html' %}
+
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   </body>
 </html>
+
+{% comment %} style="border: 2px solid green;" {% endcomment %}

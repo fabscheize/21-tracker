@@ -9,6 +9,6 @@ urlpatterns = [
     django.urls.path(
         "",
         homepage.views.HomepageView.as_view(),
-        name="main-data",
+        name="welcome",
     ),
 ]

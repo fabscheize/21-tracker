@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% translate "Главная" %} – 21{% endblock %}
+
+{% block content %}
+  <div class="container my-5">
+    <div class="d-flex justify-content-center my-4">
+      <b class="text-center prime-color hero-text">
+        {% translate "Развивай новые привычки, " %}
+        <br>
+        {% translate "стань лучшей версией себя" %}
+      </b>
+    </div>
+
+    <div class="d-flex justify-content-center my-4">
+      <h4 class="text-center">
+        {% translate "Совершенствуйся каждый день с помощью 21." %}
+      </h4>
+    </div>
+
+    <div class="d-flex justify-content-center my-4">
+      <a href="{% url "users:login" %}" class="btn btn-primary hero-btn" role="button">
+        {% translate "Начать" %}
+      </a>
+    </div>
+  </div>
+{% endblock %}
