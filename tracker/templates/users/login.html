@@ -1,42 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Вход{% endblock %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Вход" %} – 21
+{% endblock title %}
 
 {% block content %}
-<div class="container-sm mt-4">
-    <h1 class="mb-4">Логин</h1>
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p>{{ error|escape }}</p>
-                {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <p>{{ error|escape }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <form method="POST" action="" class="mb-3">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group mb-3">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                    {% if field.required %}
-                        <span>*</span>
-                    {% endif %}
-                </label>
-                {{ field }}
-                {% if field.help_text %}
-                    <small id="{{ field.id_for_label }}-help">
-                        {{ field.help_text|safe }}
-                    </small>
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Войти</button>
-        <a href="{% url 'users:password-reset' %}" class="btn btn-link">Забыли пароль?</a>
-    </form>
-</div>
-{% endblock %}
+  <div class="container my-5 d-flex justify-content-center">
+    <h1>{% translate "Войти в аккаунт" %}</h1>
+  </div>
+
+  <div class="container my-3">
+    <div class="mx-auto" style="width: 400px;">
+      {% for message in messages %}
+      <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+
+  {% translate "Войти" as submit_button %}
+  {% include "includes/user_form.html" with submit_button=submit_button%}
+
+  <div class="container my-3 d-flex justify-content-center">
+    <div class="mx-auto" style="width: 400px;">
+      <p>{% translate "Впервые у нас?" %} <a class="link-secondary" href="{% url 'users:signup' %}">{% translate "Зарегистрироваться" %}</a></p>
+    </div>
+  </div>
+{% endblock content %}

@@ -2,27 +2,27 @@
 {% load i18n %}
 
 <header>
-  <!-- Верхняя панель -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid d-flex justify-content-between">
-      <div>
-        <!-- Логотип -->
-        <a class="navbar-brand mx-2" href="{% url "homepage:welcome" %}">
-          <img src="{% static 'img/logo.png' %}" alt="21" width="50" height="50">
-        </a>
+  {% with request.resolver_match.view_name as view_name %}
+    <!-- Верхняя панель -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid d-flex justify-content-between">
+        <div>
+          <!-- Логотип -->
+          <a class="navbar-brand mx-2" href="{% url "homepage:welcome" %}">
+            <img src="{% static 'img/logo.png' %}" alt="21" width="50" height="50">
+          </a>
 
-        {% if request.user.is_authenticated %}
-          <!-- Кнопка для боковой панели (видна только на маленьких экранах) -->
-          <button class="btn btn-light d-lg-none me-2 menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
-            <i class="bi-list prime-color"></i>
-          </button>
-        {% endif %}
-      </div>
+          {% if view_name|default:''|slice:":5" != 'users' and request.user.is_authenticated %}
+            <!-- Кнопка для боковой панели (видна только на маленьких экранах) -->
+            <button class="btn btn-light d-lg-none me-2 menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+              <i class="bi-list prime-color"></i>
+            </button>
+          {% endif %}
+        </div>
 
-      <!-- Иконка профиля -->
-      <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          {% with request.resolver_match.view_name as view_name %}
+        <!-- Иконка профиля -->
+        <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {% if request.user.is_authenticated %}
               <li class="nav-item my-auto">
                 {% if view_name == 'users:profile' %} <a class="nav-link active disabled" aria-disabled="true"> {% else %} <a class="nav-link" href="#"> {% endif %}
@@ -36,10 +36,9 @@
                 </a>
               </li>
             {% endif %}
-          {% endwith %}
-
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  {% endwith %}
 </header>

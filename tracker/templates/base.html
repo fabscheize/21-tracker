@@ -25,9 +25,11 @@
 
     <main class="flex-grow-1">
       <div class="d-flex">
-        {% if request.user.is_authenticated %}
-          {% include "includes/sidebar.html" %}
-        {% endif %}
+        {% with request.resolver_match.view_name as view_name %}
+          {% if view_name|default:''|slice:":5" != 'users' and request.user.is_authenticated %}
+            {% include "includes/sidebar.html" %}
+          {% endif %}
+        {% endwith %}
 
         <!-- Контент -->
         <div class="container-fluid">

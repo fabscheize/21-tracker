@@ -1,12 +1,32 @@
 {% extends "base.html" %}
 
-{% block title %}Регистрация{% endblock %}
+{% load i18n %}
+{% load custom_filters %}
+
+{% block title %}
+  {% translate "Регистрация" %} – 21
+{% endblock title %}
 
 {% block content %}
-  <h1>Регистрация</h1>
-  <form method="POST" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-  </form>
-{% endblock %}
+  <div class="container my-5 d-flex justify-content-center">
+    <h1>{% translate "Регистрация" %}</h1>
+  </div>
+
+  <div class="container my-3">
+    <div class="mx-auto" style="width: 400px;">
+      {% for message in messages %}
+      <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+      </div> 
+    {% endfor %}
+    </div>
+  </div>
+
+  {% translate "Зарегистрироваться" as submit_button %}
+  {% include "includes/user_form.html" with submit_button=submit_button %}
+
+  <div class="container my-3">
+
+  </div>
+{% endblock content %}

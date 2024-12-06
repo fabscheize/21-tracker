@@ -1,0 +1,61 @@
+{% load custom_filters %}
+{% load i18n %}
+
+<div class="container my-5">
+  <div class="mx-auto" style="width: 400px;">
+    {% if form.errors %}
+    <div class="w-100">
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ error|escape }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container my-3 d-flex justify-content-center">
+  <div class="mx-auto" style="width: 400px;">
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label" for="{{ field.id_for_label }}">
+            {{ field.label }}
+          </label>
+          {% if field.errors %}
+            {% with "class=form-control is-invalid;aria-describedby="|add:field.id_for_label|add:"-help" as attrs %}
+              {{ field|add_attrs:attrs }}
+            {% endwith %}
+          {% else %}
+            {% with "class=form-control;aria-describedby="|add:field.id_for_label|add:"-help" as attrs %}
+              {{ field|add_attrs:attrs }}
+            {% endwith %}
+          {% endif %}
+
+          {% if field.errors %}
+          {% for error in field.errors %}
+          <div id="{{ field.id_for_label }}-help" class="invalid-feedback">
+            {{ error|escape }}
+          </div>
+          {% endfor %}
+          {% elif field.help_text %}
+          <div id="{{ field.id_for_label }}-help" class="form-text">
+            {{ field.help_text }}
+          </div>
+          {% endif %}
+          {% with request.resolver_match.view_name as view_name %}
+            {% if view_name == 'users:login' and field.id_for_label == 'id_password' %}
+              <a class="link-secondary" href="{% url 'users:password-reset' %}">{% translate "Забыли пароль?" %}</a>
+            {% endif %}
+          {% endwith %}
+        </div>
+      {% endfor %}
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary hero-btn d-flex justify-content-center">{{ submit_button }}</button>
+      </div>
+    </form>
+  </div>
+</div>
