@@ -9,6 +9,6 @@ __all__ = ()
 class HomepageTest(django.test.TestCase):
     def test_homepage_status(self):
         response = django.test.Client().get(
-            django.urls.reverse("homepage:main-data"),
+            django.urls.reverse("homepage:welcome"),
         )
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
