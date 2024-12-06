@@ -5,6 +5,7 @@ import django.contrib.messages
 import django.core.mail
 import django.shortcuts
 import django.urls
+import django.utils.safestring
 import django.utils.timezone
 import django.utils.translation
 import django.views.generic
@@ -21,7 +22,7 @@ __all__ = ()
 class SignupViewForm(django.views.generic.FormView):
     template_name = "users/signup.html"
     form_class = users.forms.SignupForm
-    success_url = django.urls.reverse_lazy("homepage:main-data")
+    success_url = django.urls.reverse_lazy("users:login")
 
     def form_valid(self, form):
         if user_model.objects.filter(
@@ -31,7 +32,7 @@ class SignupViewForm(django.views.generic.FormView):
                 self.request,
                 _("Пользователь с такой почтой уже существует"),
             )
-            return self.form_invalid(form)
+            return super().form_invalid(form)
 
         user = form.save(commit=False)
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
@@ -54,7 +55,15 @@ class SignupViewForm(django.views.generic.FormView):
 
         django.contrib.messages.success(
             self.request,
-            _("Регистрация прошла успешно!"),
+            django.utils.safestring.mark_safe(
+                "<b>"
+                + _("Регистрация прошла успешно!")
+                + "</b><br>"
+                + _(
+                    "Чтобы активировать свой аккаунт перейдите по ссылке "
+                    "в отправленном нами письме",
+                ),
+            ),
         )
 
         return super().form_valid(form)
