@@ -7,7 +7,19 @@ __all__ = ()
 user_model = django.contrib.auth.get_user_model()
 
 
+class HabitsManager(django.db.models.Manager):
+    def active(self):
+        return (self.get_queryset()
+                .filter(is_active=True)
+                .only(Habits.name.field.name,
+                      Habits.day_count.field.name,
+                      )
+                )
+
+
 class Habits(django.db.models.Model):
+    objects = HabitsManager()
+
     user = django.db.models.ForeignKey(
         user_model,
         on_delete=django.db.models.CASCADE,
