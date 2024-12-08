@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Сохранить изменения</button>
+</form>
+<form method="post" action="{% url "habits:delete" pk=form.instance.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Удалить привычку</button>
+</form>
+<form method="post" action="{% url "habits:reload" pk=form.instance.id %}">
+  {% csrf_token %}
+  <button type="submit">Обнулить текущий счетчик</button>
+</form>
+{% endblock %}

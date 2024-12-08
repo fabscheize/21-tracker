@@ -1,4 +1,5 @@
 import django.contrib.auth
+import django.core.validators
 import django.db.models
 
 
@@ -9,12 +10,7 @@ user_model = django.contrib.auth.get_user_model()
 
 class HabitsManager(django.db.models.Manager):
     def active(self):
-        return (self.get_queryset()
-                .filter(is_active=True)
-                .only(Habits.name.field.name,
-                      Habits.day_count.field.name,
-                      )
-                )
+        return self.get_queryset().filter(is_active=True)
 
 
 class Habits(django.db.models.Model):
@@ -48,16 +44,27 @@ class Habits(django.db.models.Model):
         help_text="время последнего обновления",
         null=True,
     )
-    count = django.db.models.SmallIntegerField(
+    count = django.db.models.PositiveSmallIntegerField(
         default=1,
         verbose_name="число выполнений",
         help_text="сколько раз нужно выполнить привычку за день",
+        validators=[
+            django.core.validators.MinValueValidator(1),
+            django.core.validators.MaxValueValidator(24),
+        ],
     )
-    day_count = django.db.models.SmallIntegerField(
+    day_count = django.db.models.PositiveSmallIntegerField(
         default=0,
         verbose_name="число выполнений в день",
         help_text="сколько раз была выполнена привычка за день",
+        validators=[
+            django.core.validators.MinValueValidator(1),
+            django.core.validators.MaxValueValidator(24),
+        ],
     )
+
+    def progress(self):
+        return int((self.day_count / self.count) * 100)
 
     class Meta:
         verbose_name = "привычка"

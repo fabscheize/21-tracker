@@ -1,1 +1,11 @@
 {% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 1rem;">
+  <div class="row g-2">
+    {% for habit in object_list %}
+      {% include "includes/habit_card.html" with habit=habit %} 
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

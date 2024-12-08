@@ -1,0 +1,23 @@
+<div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-2">
+  <div class="card h-100" style="height: auto;">
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title">{{ habit.name }}</h5>
+      <div class="progress mt-3">
+        <div class="progress-bar" role="progressbar" style="width: {{ habit.progress }}%;" aria-valuenow="{{ habit.progress }}" aria-valuemin="0" aria-valuemax="100">
+          {{ habit.progress }}%
+        </div>
+      </div>
+      <div class="mt-1">
+        <form method="POST" action="{% url 'habits:complete' pk=habit.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary {% if habit.progress == 100 %} disabled {% endif %} enabled">Завершить</button>
+        </form>
+      </div>
+      <div class="mt-1">
+        <a href="{% url "habits:settings" pk=habit.id %}" class="btn btn-primary">Настройка</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
