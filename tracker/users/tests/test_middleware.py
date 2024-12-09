@@ -17,6 +17,9 @@ class CustomBackendTest(django.test.TestCase):
         self.factory = django.test.RequestFactory()
 
     def test_authenticated_user(self):
+        """
+        Проверка с авторизованным пользователем
+        """
         request = self.factory.get("/")
         request.user = self.user
 
@@ -24,6 +27,9 @@ class CustomBackendTest(django.test.TestCase):
         self.assertEqual(request.user, updated_user)
 
     def test_anonymous_user(self):
+        """
+        Проверка с анонимным пользователем
+        """
         request = self.factory.get("/")
         request.user = django.contrib.auth.models.AnonymousUser()
         self.assertTrue(
