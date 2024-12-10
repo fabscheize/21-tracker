@@ -102,3 +102,28 @@ class ReActiveView(django.views.generic.base.View):
         user.attempts_count = 0
         user.save()
         return django.shortcuts.redirect("users:login")
+
+
+class ProfileView(
+    django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.FormView,
+):
+    template_name = "users/profile.html"
+    form_class = users.forms.ChangeForm
+    success_url = django.urls.reverse_lazy("users:profile")
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["instance"] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.save()
+
+        django.contrib.messages.success(
+            self.request,
+            "Профиль обновлен успешно!",
+        )
+
+        return super().form_valid(form)

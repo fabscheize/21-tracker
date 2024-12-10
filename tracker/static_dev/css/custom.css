@@ -12,6 +12,10 @@
   .left-panel {
     margin-left: 10px;
   }
+  .round-img {
+    height: 200px;
+    width: 200px;
+  }
 }
 /* sm-экраны */
 @media (max-width: 991px) {
@@ -22,6 +26,10 @@
     --bs-btn-padding-y: .5rem;
     --bs-btn-padding-x: 1.5rem;
     --bs-btn-font-size: 1rem;
+  }
+  .round-img {
+    height: 100px;
+    width: 100px;
   }
 }
 .left-panel {
@@ -75,6 +83,22 @@
 .icon-disabled {
   font-size: 1em;
   color: rgb(158.6554054054, 205.8445945946, 205.8445945946);
+}
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: rgb(80.0675675676, 156.9324324324, 156.9324324324) !important;
+}
+
+.round-img {
+  border-radius: 50%;
+}
+
+.addfile {
+  display: block;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: red;
 }
 
 /*# sourceMappingURL=custom.css.map */

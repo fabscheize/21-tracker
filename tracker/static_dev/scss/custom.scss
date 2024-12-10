@@ -1,4 +1,4 @@
-$primary: #c5dddd;
+$primary: rgb(108, 180, 180);
 $primary_l: #{lighten($primary, 15%)};
 $secondary: rgb(87, 87, 87);
 
@@ -17,6 +17,11 @@ $secondary: rgb(87, 87, 87);
   .left-panel {
     margin-left: 10px;
   }
+
+  .round-img {
+    height: 200px;
+    width: 200px;
+  }
 }
 
 /* sm-экраны */
@@ -29,6 +34,11 @@ $secondary: rgb(87, 87, 87);
     --bs-btn-padding-y: .5rem;
     --bs-btn-padding-x: 1.5rem;
     --bs-btn-font-size: 1rem;
+  }
+
+  .round-img {
+    height: 100px;
+    width: 100px;
   }
 }
 
@@ -92,4 +102,20 @@ $secondary: rgb(87, 87, 87);
 .icon-disabled {
   font-size: 1em;
   color: #{$primary_l};
+}
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: #{darken($primary, 10%)} !important;
+}
+
+.round-img {
+  border-radius: 50%;
+}
+
+.addfile {
+  display: block;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-color: red;
 }

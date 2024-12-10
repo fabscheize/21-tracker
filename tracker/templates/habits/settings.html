@@ -2,6 +2,10 @@
 
 {% load i18n %}
 
+{% block title %}
+  {% translate "Редактирование привычки" %} – 21
+{% endblock title %}
+
 {% block content %}
   <div class="container-fluid" style="padding: 1rem;">
     <div class="container">
@@ -20,7 +24,7 @@
   </div>
 
 
-  <!-- Модальное окно -->
+  <!-- Модальное окно удаления привычки -->
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Профиль" %} - 21
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid" style="padding: 1rem;">
+  <div class="container d-flex justify-content-center">
+    <h1>{% translate "Профиль" %}</h1>
+  </div>
+
+  <div class="container my-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-3">
+        <div class="dropdown text-center">
+          {% if request.user.profile.image %}
+            <img src="{{ request.user.profile.get_image_300x300.url }}" class="round-img">
+          {% else %}
+            <img src="{% static 'img/no-avatar.jpg' %}" class="round-img">
+          {% endif %}
+
+          <h3 class="my-3">{{ request.user.username }}</h3>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-10 col-lg-6">
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          {% include "includes/form.html" %}
+          <button type="submit" class="btn btn-primary">{% translate "Сохранить изменения" %}</button>
+        </form>
+
+        <div class="my-3">
+          <a class="btn btn-secondary" href="{% url 'users:password-change' %}" role="button">{% translate "Изменить пароль" %}</a>
+          <a class="btn btn-outline-danger mx-1" data-bs-toggle="modal" data-bs-target="#logoutModal" role="button">{% translate "Выйти" %}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-3">
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}
