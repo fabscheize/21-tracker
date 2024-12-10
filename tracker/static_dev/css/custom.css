@@ -48,7 +48,7 @@
   color: rgb(108, 180, 180);
 }
 
-.darker-prime-color {
+.lighter-prime-color {
   color: rgb(158.6554054054, 205.8445945946, 205.8445945946);
 }
 
@@ -56,13 +56,15 @@
   color: rgb(87, 87, 87);
 }
 
-.hero-btn {
+.btn-primary {
   --bs-btn-bg: rgb(108, 180, 180);
   --bs-btn-border-color: rgb(108, 180, 180);
   --bs-btn-hover-bg: rgb(80.0675675676, 156.9324324324, 156.9324324324);
   --bs-btn-hover-border-color: rgb(80.0675675676, 156.9324324324, 156.9324324324);
   --bs-btn-active-bg: rgb(62.8378378378, 123.1621621622, 123.1621621622);
   --bs-btn-active-border-color: rgb(62.8378378378, 123.1621621622, 123.1621621622);
+  --bs-btn-disabled-bg: rgb(158.6554054054, 205.8445945946, 205.8445945946);
+  --bs-btn-disabled-border-color: rgb(158.6554054054, 205.8445945946, 205.8445945946);
 }
 
 .icon-active {

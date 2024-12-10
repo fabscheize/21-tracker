@@ -1,11 +1,89 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<div class="container-fluid" style="padding: 1rem;">
-  <div class="row g-2">
-    {% for habit in object_list %}
-      {% include "includes/habit_card.html" with habit=habit %} 
-    {% endfor %}
+  <div class="container-fluid" style="padding: 1rem;">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1>{% translate "Мои привычки" %}</h1>
+
+      <!-- Кнопка-триггер модального окна создания привычки -->
+      <button type="button" class="btn btn-primary hero-btn" data-bs-toggle="modal" data-bs-target="#createHabitModal">
+        {% translate "Добавить" %}
+      </button>
+    </div>
+
+    <!-- Все привычки -->
+    <div class="row g-3 mx-1 my-2">
+      {% for habit in habits %}
+        {% include "includes/habit_card.html" with habit=habit %}
+      {% empty %}
+        <div class="col-12">
+          <p class="fs-4">{% translate "Жми кнопку" %} <b class="prime-color">{% translate "Добавить" %}</b> {% translate "и начинай совершенствоваться!" %}</p>
+
+        </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
-{% endblock %}
+
+  <!-- Модальное окно создания привычки -->
+  <div class="modal modal-lg fade" id="createHabitModal" tabindex="-1" aria-labelledby="createHabitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="createHabitModalLabel">{% translate "Добавить новую привычку" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+
+        <!-- Форма создания привычки -->
+        <form method="post" novalidate>
+          <div class="modal-body">
+            {% csrf_token %}
+            {% include "includes/form.html" with form=form %}
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Закрыть" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Сохранить" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Если форма невалидна, открываем модальное окно при перезагрузке -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if form.errors %}
+          var myModal = new bootstrap.Modal(document.getElementById('createHabitModal'));
+          myModal.show();
+        {% endif %}
+
+        var createHabitModal = document.getElementById('createHabitModal');
+        var form = createHabitModal.querySelector('form');
+
+        function resetForm() {
+          form.reset();
+          var invalidFields = form.querySelectorAll('.is-invalid, .is-valid');
+          invalidFields.forEach(function(field) {
+            field.classList.remove('is-invalid', 'is-valid');
+          });
+
+          var errorMessages = form.querySelectorAll('.invalid-feedback, .valid-feedback');
+          errorMessages.forEach(function(message) {
+            message.textContent = '';
+          });
+        }
+
+        createHabitModal.addEventListener('hidden.bs.modal', function() {
+          resetForm();
+        });
+
+        var closeButton = createHabitModal.querySelector('[data-bs-dismiss="modal"]');
+        closeButton.addEventListener('click', function() {
+          resetForm();
+        });
+      });
+    </script>
+
+  {% endblock %}

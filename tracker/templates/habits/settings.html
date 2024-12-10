@@ -1,17 +1,45 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Сохранить изменения</button>
-</form>
-<form method="post" action="{% url "habits:delete" pk=form.instance.id %}">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-danger">Удалить привычку</button>
-</form>
-<form method="post" action="{% url "habits:reload" pk=form.instance.id %}">
-  {% csrf_token %}
-  <button type="submit">Обнулить текущий счетчик</button>
-</form>
+  <div class="container-fluid" style="padding: 1rem;">
+    <div class="container">
+      <h1>{% translate "Редактирование привычки" %}</h1>
+
+      <form method="post" class="my-3">
+        {% csrf_token %}
+        {% include "includes/form.html" with form=form %}
+        <button class="btn btn-primary" type="submit">{% translate "Сохранить изменения" %}</button>
+      </form>
+
+      <button type="button" class="btn btn-outline-danger my-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        {% translate "Удалить привычку" %}
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Модальное окно -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">{% translate "Удалить привычку" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          {% translate "Вы уверены, что хотите удалить эту привычку безвозвратно?" %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Нет, оставить" %}</button>
+          <form method="post" action="{% url "habits:delete" pk=form.instance.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">{% translate "Да, удалить" %}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
