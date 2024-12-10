@@ -41,7 +41,7 @@ class HabitsViewsTest(django.test.TestCase):
             habits.models.Habits.name.field.name: "habit1",
             habits.models.Habits.count.field.name: 10,
         }
-        response = self.client.post(django.urls.reverse("habits:create"), data)
+        response = self.client.post(django.urls.reverse("habits:list"), data)
         self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
         self.assertTrue(
             habits.models.Habits.objects.filter(

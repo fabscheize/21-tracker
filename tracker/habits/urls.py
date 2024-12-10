@@ -12,11 +12,6 @@ urlpatterns = [
         name="list",
     ),
     django.urls.path(
-        "create/",
-        habits.views.HabitsCreateView.as_view(),
-        name="create",
-    ),
-    django.urls.path(
         "<int:pk>/complete/",
         habits.views.HabitCompleteView.as_view(),
         name="complete",

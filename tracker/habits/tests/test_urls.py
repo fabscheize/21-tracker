@@ -6,13 +6,6 @@ __all__ = ()
 
 
 class HabitsUrlsTest(django.test.TestCase):
-
-    def test_create_url(self):
-        """
-        Проверка работаспособности ссылки создания
-        """
-        django.urls.reverse("habits:create")
-
     def test_list_url(self):
         """
         Проверка работаспособности ссылки списка

@@ -15,13 +15,32 @@ user_model = django.contrib.auth.get_user_model()
 
 class HabitsListView(
     django.contrib.auth.mixins.LoginRequiredMixin,
-    django.views.generic.ListView,
+    django.views.generic.base.TemplateResponseMixin,
+    django.views.generic.View,
 ):
     template_name = "habits/list.html"
-    model = habits.models.Habits
 
-    def get_queryset(self):
-        return self.model.objects.active().filter(user=self.request.user)
+    def get(self, request, *args, **kwargs):
+        all_habits = habits.models.Habits.objects.active().filter(
+            user=request.user,
+        )
+        form = habits.forms.BaseHabitForm()
+        return self.render_to_response({"habits": all_habits, "form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = habits.forms.BaseHabitForm(request.POST)
+        if form.is_valid():
+            habit = form.save(commit=False)
+            habit.user = request.user
+            habit.save()
+            return django.shortcuts.redirect(
+                django.urls.reverse("habits:list"),
+            )
+
+        all_habits = habits.models.Habits.objects.active().filter(
+            user=request.user,
+        )
+        return self.render_to_response({"habits": all_habits, "form": form})
 
 
 class HabitCompleteView(
@@ -39,21 +58,6 @@ class HabitCompleteView(
             habit.save()
 
         return django.shortcuts.redirect(django.urls.reverse("habits:list"))
-
-
-class HabitsCreateView(
-    django.contrib.auth.mixins.LoginRequiredMixin,
-    django.views.generic.FormView,
-):
-    template_name = "habits/create.html"
-    form_class = habits.forms.BaseHabitForm
-    success_url = django.urls.reverse_lazy("habits:list")
-
-    def form_valid(self, form):
-        habit = form.save(commit=False)
-        habit.user = self.request.user
-        habit.save()
-        return super().form_valid(form)
 
 
 class HabitsSettingsView(
