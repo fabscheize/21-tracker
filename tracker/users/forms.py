@@ -25,13 +25,16 @@ class ChangeForm(django.forms.ModelForm):
                 field.field.widget.attrs["class"] += " is-invalid"
 
     class Meta(django.contrib.auth.forms.UserChangeForm.Meta):
+        model = user_model
         fields = [
             user_model.first_name.field.name,
             user_model.last_name.field.name,
             user_model.email.field.name,
+            user_model.timezone.field.name,
         ]
         labels = {
             user_model.first_name.field.name: "Имя",
             user_model.last_name.field.name: "Фамилия",
             user_model.email.field.name: "Почта",
+            user_model.timezone.field.name: "Временная зона",
         }

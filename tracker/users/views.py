@@ -1,5 +1,6 @@
 import django.conf
 import django.contrib.auth
+import django.contrib.auth.mixins
 import django.contrib.auth.tokens
 import django.contrib.messages
 import django.core.mail
@@ -36,6 +37,10 @@ class SignupViewForm(django.views.generic.FormView):
 
         user = form.save(commit=False)
         user.is_active = django.conf.settings.DEFAULT_USER_IS_ACTIVE
+        user.timezone = self.request.POST.get(
+            "timezone",
+            django.conf.settings.TIME_ZONE,
+        )
         user.save()
 
         activation_url = self.request.build_absolute_uri(

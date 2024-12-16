@@ -1,6 +1,7 @@
 import os
 import pathlib
 
+import celery.schedules
 import dotenv
 
 
@@ -34,9 +35,9 @@ DEFAULT_USER_IS_ACTIVE = is_true(
     ),
 )
 
-
 AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "/"
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -45,10 +46,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_celery_beat",
     "habits.apps.HabitsConfig",
     "homepage.apps.HomepageConfig",
     "users.apps.UsersConfig",
+    "notifications.apps.NotificationsConfig",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -58,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "users.middleware.CustomUserMiddleware",
 ]
 
@@ -139,6 +144,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
@@ -146,3 +152,17 @@ EMAIL_FILE_PATH = BASE_DIR / "send_mail"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CELERY_TIMEZONE = "Europe/Moscow"
+
+CELERY_BROKER_URL = os.getenv(
+    "CELERY_BROKER",
+    "amqp://guest:guest@localhost:5672//",
+)
+
+CELERY_BEAT_SCHEDULE = {
+    "periodic-task": {
+        "task": "habits.tasks.perodic_task",
+        "schedule": celery.schedules.timedelta(hours=1),
+    },
+}

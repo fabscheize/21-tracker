@@ -1,0 +1,55 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  django:
+    container_name: django
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./tracker:/app
+    command: |
+      bash -c "
+        python manage.py collectstatic --noinput && 
+        python manage.py runserver 0.0.0.0:8000
+      "
+    depends_on:
+      - rabbitmq
+    environment:
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+      - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
+      - DJANGO_DEBUG=false
+
+  celery:
+    container_name: celery
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: celery -A tracker worker -P solo
+    volumes:
+      - ./tracker:/app
+    depends_on:
+      - django
+      - rabbitmq
+    environment:
+      - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
+
+  celery-beat:
+    container_name: celery-beat
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: celery -A tracker beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l INFO
+    volumes:
+      - ./tracker:/app
+    depends_on:
+      - django
+      - rabbitmq
+    environment:
+      - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//

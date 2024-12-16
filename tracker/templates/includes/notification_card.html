@@ -1,0 +1,40 @@
+{% load i18n %}
+
+<div class="col-12">
+  <div class="card" style="min-height: 80px; max-width: 934px;">
+    <div class="card-body justify-content-between d-flex align-items-center"
+      style="background: linear-gradient(90deg, #cae0e0 {{ habit.progress }}%, #f8f9fa {{ habit.progress }}%);
+      border-radius: 5px;">
+      <p class="fs-3 mb-0">{{ notification.name }} | {{ notification.time }}</p>
+      <button type="button" class="btn btn-outline-danger my-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        {% translate "Удалить уведомление" %}
+      </button>
+    </div>
+  </div>
+
+  <!-- Модальное окно удаления уведомления -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteModalLabel">{% translate "Удалить уведомление" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          {% translate "Вы уверены, что хотите удалить это уведомление безвозвратно?" %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            {% translate "Нет, оставить" %}
+          </button>
+          <form method="post" action="{% url 'notifications:delete' pk=notification.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">
+              {% translate "Да, удалить" %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

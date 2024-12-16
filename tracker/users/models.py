@@ -1,8 +1,12 @@
+import django.conf
 import django.contrib.auth.models
 import django.db.models
+import pytz
 
 
 __all__ = ()
+
+TIMEZONE_CHOICES = [(tz, tz) for tz in pytz.all_timezones]
 
 
 class CustomUserManager(django.contrib.auth.models.UserManager):
@@ -12,7 +16,6 @@ class CustomUserManager(django.contrib.auth.models.UserManager):
 
 class User(django.contrib.auth.models.AbstractUser):
     objects = CustomUserManager()
-
     telegram_id = django.db.models.BigIntegerField(
         unique=True,
         null=True,
@@ -27,4 +30,10 @@ class User(django.contrib.auth.models.AbstractUser):
         null=True,
         blank=True,
         verbose_name="время блокировки",
+    )
+    timezone = django.db.models.CharField(
+        max_length=50,
+        choices=TIMEZONE_CHOICES,
+        verbose_name="часовой пояс пользователя",
+        default=django.conf.settings.CELERY_TIMEZONE,
     )

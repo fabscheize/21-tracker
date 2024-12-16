@@ -26,7 +26,11 @@
   {% translate "Зарегистрироваться" as submit_button %}
   {% include "includes/user_form.html" with submit_button=submit_button %}
 
-  <div class="container my-3">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      document.getElementById("timezone").value = timezone;
+    });
+  </script>
 
-  </div>
 {% endblock content %}

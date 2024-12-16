@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+  {% translate "Настройка" %} – 21
+{% endblock title %}
+
+{% block content %}
+  <div class="container-fluid" style="padding: 1rem;">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1>{% translate "Настройка уведомлений" %}</h1>
+
+      <!-- Кнопка-триггер модального окна создания уведомления -->
+      <button type="button" class="btn btn-primary hero-btn" data-bs-toggle="modal" data-bs-target="#createNotificationModal">
+        {% translate "Добавить" %}
+      </button>
+    </div>
+
+    <!-- Все уведомления -->
+    <div class="row g-3 mx-1 my-2">
+      {% for notification in notifications %}
+        {% include "includes/notification_card.html" with notification=notification %}
+      {% empty %}
+        <div class="col-12">
+          <p class="fs-4">{% translate "Жми кнопку" %} <b class="prime-color">{% translate "Добавить" %}</b> {% translate "и начинай совершенствоваться!" %}</p>
+
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Модальное окно создания уведомления -->
+  <div class="modal modal-lg fade" id="createNotificationModal" tabindex="-1" aria-labelledby="createNotificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="createNotificationModalLabel">{% translate "Добавить новую привычку" %}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+
+        <!-- Форма создания уведомления -->
+        <form method="post" novalidate>
+          <div class="modal-body">
+            {% csrf_token %}
+            {% include "includes/form.html" with form=form %}
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Закрыть" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Сохранить" %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Если форма невалидна, открываем модальное окно при перезагрузке -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if form.errors %}
+          var myModal = new bootstrap.Modal(document.getElementById('createNotificationModal'));
+          myModal.show();
+        {% endif %}
+
+        var createNotificationModal = document.getElementById('createNotificationModal');
+        var form = createNotificationModal.querySelector('form');
+
+        function resetForm() {
+          form.reset();
+          var invalidFields = form.querySelectorAll('.is-invalid, .is-valid');
+          invalidFields.forEach(function(field) {
+            field.classList.remove('is-invalid', 'is-valid');
+          });
+
+          var errorMessages = form.querySelectorAll('.invalid-feedback, .valid-feedback');
+          errorMessages.forEach(function(message) {
+            message.textContent = '';
+          });
+        }
+
+        createNotificationModal.addEventListener('hidden.bs.modal', function() {
+          resetForm();
+        });
+
+        var closeButton = createNotificationModal.querySelector('[data-bs-dismiss="modal"]');
+        closeButton.addEventListener('click', function() {
+          resetForm();
+        });
+      });
+    </script>
+
+  {% endblock %}
