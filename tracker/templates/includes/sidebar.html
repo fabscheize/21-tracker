@@ -24,11 +24,11 @@
         </li>
 
         <li class="nav-item">
-          {% if view_name == 'habits:progress' %}
+          {% if view_name == 'statistic:progress' %}
             <a class="nav-link active disabled" aria-current="page">
               <i class="bi-pie-chart-fill icon-active mx-2"></i>
           {% else %}
-            <a class="nav-link secondary-color" href="#">
+            <a class="nav-link secondary-color" href="{% url "statistic:progress" %}">
               <i class="bi-pie-chart-fill icon-disabled mx-2"></i>
           {% endif %}
               {% translate "Прогресс" %}

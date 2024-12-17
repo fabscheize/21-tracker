@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+  {% translate "Прогресс" %} – 21
+{% endblock title %}
+
+{% block content %}
+  <div class="container-fluid" style="padding: 1rem;">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1>{% translate "Прогресс" %}</h1>
+    </div>
+
+    <div class="container my-4">
+      <div class="card" style="max-width: 500px;">
+        <div class="card-header">
+          <h4 class="mb-0 text-center">{{ month_year }}</h4>
+        </div>
+
+        <div class="card-body p-0">
+          <div class="calendar-container">
+            {{ calendar|safe }}
+          </div>
+        </div>
+
+        <div class="card-footer text-muted text-center">
+          <div class="d-flex align-items-center justify-content-center mb-2">
+            <span class="badge-icon day-100 me-2"></span>
+            <span>{% translate "Выполнено на 100%" %}</span>
+            <span>&nbsp;&nbsp;</span>
+            <span class="badge-icon day-current me-2"></span>
+            <span>{% translate "Сегодня" %}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

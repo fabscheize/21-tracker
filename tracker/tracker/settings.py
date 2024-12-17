@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "habits.apps.HabitsConfig",
     "homepage.apps.HomepageConfig",
+    "statistic.apps.StatisticConfig",
     "users.apps.UsersConfig",
 ]
 

@@ -12,6 +12,7 @@ include = django.urls.include
 urlpatterns = [
     path("", include("homepage.urls", namespace="homepage")),
     path("habits/", include("habits.urls", namespace="habits")),
+    path("statistic/", include("statistic.urls", namespace="statistic")),
     path("admin/", django.contrib.admin.site.urls),
     path("auth/", include("users.urls", namespace="users")),
     path("auth/", include(django.contrib.auth.urls)),

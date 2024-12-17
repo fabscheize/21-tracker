@@ -31,6 +31,7 @@ application-import-names =
     tracker
     habits
     homepage
+    statistic
     users
 import-order-style = google
 ignore =

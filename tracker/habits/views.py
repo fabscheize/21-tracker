@@ -1,3 +1,5 @@
+import datetime
+
 import django.contrib.auth
 import django.contrib.auth.mixins
 import django.shortcuts
@@ -7,6 +9,7 @@ import django.views.generic
 
 import habits.forms
 import habits.models
+import statistic.models
 
 __all__ = ()
 
@@ -53,9 +56,44 @@ class HabitCompleteView(
             id=pk,
             user=request.user,
         )
-        if habit.day_count < habit.count:
-            habit.day_count += 1
-            habit.save()
+
+        with django.db.transaction.atomic():
+            if habit.day_count < habit.count:
+                habit.day_count += 1
+                habit.save()
+
+            today = datetime.date.today()
+            log, created = statistic.models.HabitLog.objects.get_or_create(
+                habit=habit,
+                date=today,
+                defaults={"progress": 0},
+            )
+            if habit.day_count == habit.count:
+                log.progress = 100
+            else:
+                log.progress = int((habit.day_count / habit.count) * 100)
+
+            log.save()
+
+            stats, _ = statistic.models.HabitStats.objects.get_or_create(
+                habit=habit,
+            )
+
+            if log.progress == 100:
+                stats.days_completed_current_month += 1
+
+                previous_log = statistic.models.HabitLog.objects.filter(
+                    habit=habit,
+                    date=today - datetime.timedelta(days=1),
+                    progress=100,
+                ).exists()
+
+                if previous_log:
+                    stats.longest_streak += 1
+                else:
+                    stats.longest_streak = 1
+
+            stats.save()
 
         return django.shortcuts.redirect(django.urls.reverse("habits:list"))
 

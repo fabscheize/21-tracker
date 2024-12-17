@@ -119,3 +119,86 @@ $secondary: rgb(87, 87, 87);
   height: 200px;
   background-color: red;
 }
+
+.completed {
+  background-color: #c8e6c9;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  /* Фиксированная ширина ячеек */
+}
+
+.calendar-table td {
+  border: 1px solid #ddd;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  padding: 0 0 0 1px;
+}
+
+// .calendar-table .calendar-cell {
+//   padding: 0;
+// }
+
+.calendar-table .day-circle {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.calendar-table .empty {
+  background-color: #f9f9f9;
+}
+
+.calendar-table .completed {
+  background-color: #{$primary_l};
+}
+
+.calendar-table .completed .day-circle {
+  color: white;
+}
+
+.calendar-table .today {
+  background-color: white;
+}
+
+.calendar-table .today .day-circle {
+  background-color: #{$secondary};
+  color: white;
+}
+
+.calendar-table .completed-today {
+  background-color: #{$primary_l};
+}
+
+.calendar-table .completed-today .day-circle {
+  background-color: rgb(170, 170, 170);
+  color: white;
+}
+
+// --
+
+.badge-icon {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: var(--badge-color, transparent);
+}
+
+.day-100 {
+  --badge-color: #{$primary_l};
+}
+
+.day-current {
+  --badge-color: rgb(170, 170, 170);
+}
