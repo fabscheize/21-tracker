@@ -161,8 +161,28 @@ CELERY_BROKER_URL = os.getenv(
 )
 
 CELERY_BEAT_SCHEDULE = {
-    "periodic-task": {
-        "task": "habits.tasks.perodic_task",
+    "periodic-reload-task": {
+        "task": "habits.tasks.perodic_reload_task",
         "schedule": celery.schedules.timedelta(hours=1),
+    },
+    "periodic-notifications-task-five": {
+        "task": "notifications.tasks.perodic_notifications_task_five",
+        "schedule": celery.schedules.timedelta(seconds=20),
+    },
+    "periodic-notifications-task-fifteen": {
+        "task": "notifications.tasks.perodic_notifications_task_fifteen",
+        "schedule": celery.schedules.timedelta(minutes=15),
+    },
+    "periodic-notifications-task-thirty": {
+        "task": "notifications.tasks.perodic_notifications_task_thirty",
+        "schedule": celery.schedules.timedelta(minutes=30),
+    },
+    "periodic-notifications-task-one-hour": {
+        "task": "notifications.tasks.perodic_notifications_task_hour",
+        "schedule": celery.schedules.timedelta(hours=1),
+    },
+    "periodic-notifications-task-three-hour": {
+        "task": "notifications.tasks.perodic_notifications_task_hours",
+        "schedule": celery.schedules.timedelta(hours=3),
     },
 }

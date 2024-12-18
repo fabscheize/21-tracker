@@ -12,8 +12,8 @@ urlpatterns = [
         name="settings",
     ),
     django.urls.path(
-        "<int:pk>/delete/",
-        notifications.views.NotificationDeleteView.as_view(),
-        name="delete",
+        "control/",
+        notifications.views.NotificationActiveControlView.as_view(),
+        name="control",
     ),
 ]

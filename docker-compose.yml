@@ -31,7 +31,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: celery -A tracker worker -P solo
+    command: celery -A tracker worker --loglevel=info --pool=prefork
     volumes:
       - ./tracker:/app
     depends_on:
@@ -45,7 +45,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: celery -A tracker beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l INFO
+    command: celery -A tracker beat --loglevel=info
     volumes:
       - ./tracker:/app
     depends_on:

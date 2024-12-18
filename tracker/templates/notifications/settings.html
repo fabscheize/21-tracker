@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+  {% translate "Настройка" %} – 21
+{% endblock title %}
+
+{% block content %}
+<h1>Настройка уведомлений</h1>
+<div class="container" style="max-width: 900px; margin-left: 0; padding-left: 0;">
+    <!-- Правая колонка с формой --> 
+    <div class="col-md-6">
+      <form action="{% url 'notifications:control' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" 
+                class="btn {% if notification.is_active %}btn-danger{% else %}btn-success{% endif %}" 
+                id="toggleNotificationsBtn">
+          {% if notification.is_active %}
+            Выключить уведомления по почте
+          {% else %}
+            Включить уведомления по почте
+          {% endif %}
+        </button>
+      </form>
+      <!-- Блок с сообщениями -->
+      <div class="m-1" style="width: 400px;">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+        </div> 
+        {% endfor %}
+      </div>
+      <div class="my-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

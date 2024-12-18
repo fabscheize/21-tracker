@@ -36,11 +36,11 @@
         </li>
 
         <li class="nav-item">
-          {% if view_name == 'users:settings' %}
+          {% if view_name == 'notifications:settings' %}
             <a class="nav-link active disabled" aria-current="page">
               <i class="bi-gear-fill icon-active mx-2"></i>
           {% else %}
-            <a class="nav-link secondary-color" href="#">
+            <a class="nav-link secondary-color" href="{% url "notifications:settings" %}">
               <i class="bi-gear-fill icon-disabled mx-2"></i>
           {% endif %}
               {% translate "Настройки" %}
