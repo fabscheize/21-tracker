@@ -167,7 +167,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     "periodic-notifications-task-five": {
         "task": "notifications.tasks.perodic_notifications_task_five",
-        "schedule": celery.schedules.timedelta(seconds=20),
+        "schedule": celery.schedules.timedelta(minutes=5),
     },
     "periodic-notifications-task-fifteen": {
         "task": "notifications.tasks.perodic_notifications_task_fifteen",
