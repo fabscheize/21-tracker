@@ -172,7 +172,7 @@ $secondary: rgb(87, 87, 87);
 }
 
 .calendar-table .today .day-circle {
-  background-color: #{$secondary};
+  background-color: rgb(170, 170, 170);
   color: white;
 }
 
@@ -201,4 +201,10 @@ $secondary: rgb(87, 87, 87);
 
 .day-current {
   --badge-color: rgb(170, 170, 170);
+}
+
+// --
+
+.progress-bar {
+  transition: height 0.5s ease;
 }

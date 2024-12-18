@@ -33,9 +33,20 @@ class HabitsListView(
     def post(self, request, *args, **kwargs):
         form = habits.forms.BaseHabitForm(request.POST)
         if form.is_valid():
-            habit = form.save(commit=False)
-            habit.user = request.user
-            habit.save()
+            with django.db.transaction.atomic():
+                habit = form.save(commit=False)
+                habit.user = request.user
+                habit.save()
+
+                today = datetime.date.today()
+                log, _ = statistic.models.HabitLog.objects.get_or_create(
+                    habit=habit,
+                    date=today,
+                    defaults={"progress": 0},
+                )
+
+                log.save()
+
             return django.shortcuts.redirect(
                 django.urls.reverse("habits:list"),
             )
@@ -63,7 +74,7 @@ class HabitCompleteView(
                 habit.save()
 
             today = datetime.date.today()
-            log, created = statistic.models.HabitLog.objects.get_or_create(
+            log, _ = statistic.models.HabitLog.objects.get_or_create(
                 habit=habit,
                 date=today,
                 defaults={"progress": 0},
@@ -114,15 +125,29 @@ class HabitsSettingsView(
         )
 
     def form_valid(self, form):
-        habit = form.save(commit=False)
-        habit.user = self.request.user
-        count = form.cleaned_data.get(
-            habits.models.Habits.count.field.name,
-        )
-        if count < habit.day_count:
-            habit.day_count = count
+        with django.db.transaction.atomic():
+            habit = form.save(commit=False)
+            habit.user = self.request.user
+            count = form.cleaned_data.get(
+                habits.models.Habits.count.field.name,
+            )
+            if count < habit.day_count:
+                habit.day_count = count
 
-        habit.save()
+            habit.save()
+
+            today = datetime.date.today()
+            log, _ = statistic.models.HabitLog.objects.get_or_create(
+                habit=habit,
+                date=today,
+                defaults={"progress": 0},
+            )
+            if habit.day_count == habit.count:
+                log.progress = 100
+            else:
+                log.progress = int((habit.day_count / habit.count) * 100)
+
+            log.save()
 
         return super().form_valid(form)
 
@@ -150,8 +175,19 @@ class HabitsCountReloadView(
             user=self.request.user,
             id=self.kwargs["pk"],
         )
-        habit.day_count = 0
-        habit.save()
+
+        with django.db.transaction.atomic():
+            habit.day_count = 0
+            habit.save()
+
+            today = datetime.date.today()
+            log, _ = statistic.models.HabitLog.objects.get_or_create(
+                habit=habit,
+                date=today,
+                defaults={"progress": 0},
+            )
+            log.save()
+
         return django.shortcuts.redirect(
             django.urls.reverse_lazy("habits:list"),
         )

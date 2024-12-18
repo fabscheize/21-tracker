@@ -35,12 +35,14 @@ class HabitStats(django.db.models.Model):
     longest_streak = django.db.models.PositiveIntegerField(
         default=0,
         verbose_name="Самая длинная серия выполнения",
-        help_text="Максимальное количество дней подряд, когда привычка была выполнена на 100%",
+        help_text="Максимальное количество дней подряд, "
+        "когда привычка была выполнена на 100%",
     )
     days_completed_current_month = django.db.models.PositiveIntegerField(
         default=0,
         verbose_name="Дни выполнения за месяц",
-        help_text="Количество дней за текущий месяц, когда привычка была выполнена на 100%",
+        help_text="Количество дней за текущий месяц, "
+        "когда привычка была выполнена на 100%",
     )
     days_missed_current_month = django.db.models.PositiveIntegerField(
         default=0,
