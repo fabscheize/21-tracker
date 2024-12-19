@@ -13,6 +13,7 @@
     <div class="col-md-6">
       <form action="{% url 'notifications:control' %}" method="post">
         {% csrf_token %}
+        {% if notification %}
         <button type="submit" 
                 class="btn {% if notification.is_active %}btn-danger{% else %}btn-success{% endif %}" 
                 id="toggleNotificationsBtn">
@@ -22,6 +23,7 @@
             Включить уведомления по почте
           {% endif %}
         </button>
+      {% endif %}
       </form>
       <!-- Блок с сообщениями -->
       <div class="m-1" style="width: 400px;">

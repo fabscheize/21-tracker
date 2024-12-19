@@ -109,8 +109,6 @@ class NotificationActiveControlView(
 
         notification.is_active = not notification.is_active
         notification.save()
-
-        notification.save()
         return django.shortcuts.redirect(
             django.urls.reverse_lazy("notifications:settings"),
         )
