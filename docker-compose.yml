@@ -25,12 +25,14 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        DJANGO_DEBUG: ${DJANGO_DEBUG}
     volumes:
       - ./tracker:/app
     environment:
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
-      - DJANGO_DEBUG=false
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
@@ -43,8 +45,14 @@ services:
         python manage.py collectstatic --noinput &&
         python manage.py makemigrations &&
         python manage.py migrate &&
-        gunicorn --bind 0.0.0.0:8000 tracker.wsgi:application
+        if [ \"${DJANGO_DEBUG}\" = \"true\" ]; then
+          python manage.py runserver 0.0.0.0:8000;
+        else
+          gunicorn --bind 0.0.0.0:8000 tracker.wsgi:application;
+        fi
       "
+    ports:
+      - "8000:8000"
     expose:
       - "8000"
 
@@ -53,6 +61,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        DJANGO_DEBUG: ${DJANGO_DEBUG}
     command: celery -A tracker worker -l info
     volumes:
       - ./tracker:/app
@@ -71,6 +81,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        DJANGO_DEBUG: ${DJANGO_DEBUG}
     command: celery -A tracker beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l info
     volumes:
       - ./tracker:/app
