@@ -50,7 +50,7 @@ class Habits(django.db.models.Model):
         help_text="сколько раз нужно выполнить привычку за день",
         validators=[
             django.core.validators.MinValueValidator(1),
-            django.core.validators.MaxValueValidator(24),
+            django.core.validators.MaxValueValidator(100),
         ],
     )
     day_count = django.db.models.PositiveSmallIntegerField(
@@ -59,7 +59,7 @@ class Habits(django.db.models.Model):
         help_text="сколько раз была выполнена привычка за день",
         validators=[
             django.core.validators.MinValueValidator(1),
-            django.core.validators.MaxValueValidator(24),
+            django.core.validators.MaxValueValidator(100),
         ],
     )
 

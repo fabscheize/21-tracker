@@ -35,7 +35,7 @@ class BaseHabitForm(django.forms.ModelForm):
             ),
             habits.models.Habits.count.field.name: (
                 django.utils.translation.gettext_lazy(
-                    "Сколько раз хочу выполнять привычку за день (от 1 до 24)",
+                    "Сколько раз выполнять привычку за день (от 1 до 100)",
                 )
             ),
         }
@@ -45,7 +45,7 @@ class BaseHabitForm(django.forms.ModelForm):
                     "Значение должно быть не меньше 1.",
                 ),
                 "max_value": django.utils.translation.gettext_lazy(
-                    "Значение должно быть не больше 24.",
+                    "Значение должно быть не больше 100.",
                 ),
             },
         }
