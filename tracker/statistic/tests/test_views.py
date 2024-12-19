@@ -16,7 +16,8 @@ class StatisticViewsTest(django.test.TestCase):
         Создание тестового пользователя
         """
         self.user = user_model.objects.create_user(
-            username="testuser", password="password",
+            username="testuser",
+            password="password",
         )
 
     def test_progress_view(self):
