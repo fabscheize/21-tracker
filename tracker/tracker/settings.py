@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django_celery_beat",
     "habits.apps.HabitsConfig",
     "homepage.apps.HomepageConfig",
+    "statistic.apps.StatisticConfig",
     "users.apps.UsersConfig",
     "notifications.apps.NotificationsConfig",
 ]

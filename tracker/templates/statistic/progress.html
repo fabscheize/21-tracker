@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+  {% translate "Прогресс" %} – 21
+{% endblock title %}
+
+{% block content %}
+  <div class="container-fluid" style="padding: 1rem;">
+    <!-- Заголовок и выбор привычки -->
+    <div class="container-fluid d-flex justify-content-between">
+      <h1>{% translate "Прогресс" %}</h1>
+      <form method="get">
+        <select name="habit" class="form-select" onchange="this.form.submit();" style="height: 100%;">
+          <option value="">{% translate "Все привычки" %}</option>
+          {% for habit in habits %}
+            <option value="{{ habit.id }}" {% if habit.id == selected_habit.id %}selected{% endif %}>
+              {{ habit.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+
+    <div class="row g-3 mx-1 my-2 d-flex justify-content-between" style="max-width: 1200px;">
+      <!-- Календарь -->
+      <div class="col-12 my-4" style="max-width: 550px;">
+        <h3 class="mb-4 text-center">{% translate "За этот месяц" %}</h3>
+        <div class="card">
+          <div class="card-header">
+            <h4 class="mb-0 text-center">{{ month_year }}</h4>
+          </div>
+
+          <div class="card-body p-0">
+            <div class="calendar-container">{{ calendar|safe }}</div>
+          </div>
+
+          <div class="card-footer text-muted text-center">
+            <div class="d-flex align-items-center justify-content-center mb-2">
+              <span class="badge-icon day-100 me-2"></span>
+              <span>{% translate "Выполнено на 100%" %}</span>
+              <span>&nbsp;&nbsp;</span>
+              <span class="badge-icon day-current me-2"></span>
+              <span>{% translate "Сегодня" %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Гистограмма -->
+      <div class="col-12 my-4" style="max-width: 550px;">
+        <h3 class="mb-4 text-center">{% translate "Средний процент выполнения" %}</h3>
+          <div class="chart-container" style="width: 100%; max-width: 500px; position: relative;">
+            <!-- Оси и сетка -->
+            <div class="chart-grid" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;">
+              <div style="height: 20%; border-top: 1px solid #ddd;"></div>
+              <div style="height: 20%; border-top: 1px solid #ddd;"></div>
+              <div style="height: 20%; border-top: 1px solid #ddd;"></div>
+              <div style="height: 20%; border-top: 1px solid #ddd;"></div>
+              <div style="height: 20%; border-top: 1px solid #ddd;"></div>
+            </div>
+
+            <!-- Столбцы -->
+            <div class="d-flex justify-content-between align-items-end" style="height: 300px; position: relative; z-index: 2;">
+              {% for progress, dates in weekly_progress_with_dates %}
+                <div class="text-center mx-2" style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                  <div style="
+                    background-color: rgb(108, 180, 180);
+                    height: calc(30px + 2.4px * {{ progress }});
+                    width: 80%;
+                    border-radius: 4px 4px 0 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-size: 0.8rem;
+                  ">
+                    {{ progress }}%
+                  </div>
+
+                  <div class="mt-2" style="font-size: 0.9rem;">
+                    {{ dates.0|date:"d.m" }} - {{ dates.1|date:"d.m" }}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

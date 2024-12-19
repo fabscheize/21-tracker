@@ -15,6 +15,7 @@ urlpatterns = [
     path("auth/", include("users.urls", namespace="users")),
     path("auth/", include(django.contrib.auth.urls)),
     path("habits/", include("habits.urls", namespace="habits")),
+    path("statistic/", include("statistic.urls", namespace="statistic")),
     path(
         "settings/",
         include("notifications.urls", namespace="notifications"),

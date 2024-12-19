@@ -20,6 +20,11 @@
       <button type="button" class="btn btn-outline-danger my-2" data-bs-toggle="modal" data-bs-target="#deleteModal">
         {% translate "Удалить привычку" %}
       </button>
+
+      {% comment %} <form method="post" action="{% url "habits:reload" pk=form.instance.id %}">
+        {% csrf_token %}
+        <button type="submit">Обнулить текущий счетчик</button>
+      </form> {% endcomment %}
     </div>
   </div>
 
