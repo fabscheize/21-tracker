@@ -6,5 +6,6 @@ environs==11.0.0
 gunicorn==23.0.0
 pillow==11.0.0
 pytz==2024.2
+psycopg2-binary==2.9.10
 sorl-thumbnail==12.11.0
 whitenoise==6.8.2
