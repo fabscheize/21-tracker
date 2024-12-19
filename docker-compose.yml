@@ -1,34 +1,11 @@
 version: "3.9"
 
-# Для сервера
-# networks:
-#   default:
-#     driver: bridge
-#     driver_opts:
-#       com.docker.network.driver.mtu: 1450
-
-
 services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
-    depends_on:
-      - postgres
-
-  postgres:
-    image: postgres:17
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    expose:
-      - "5432"
-
-
 
   django:
     build:
@@ -42,13 +19,8 @@ services:
       - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
       - DJANGO_DEBUG=${DJANGO_DEBUG}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
     depends_on:
       - rabbitmq
-      - postgres
     command: |
       bash -c "
         python manage.py collectstatic --noinput &&
@@ -78,13 +50,8 @@ services:
     depends_on:
       - rabbitmq
       - django
-      - postgres
     environment:
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
-      - POSTGRES_HOST=postgres
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
 
   celery-beat:
     build:
@@ -97,13 +64,8 @@ services:
       - ./tracker:/app
     depends_on:
       - rabbitmq
-      - postgres
     environment:
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
-      - POSTGRES_HOST=postgres
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
 
   nginx:
     image: nginx:latest
@@ -114,6 +76,3 @@ services:
       - "80:80"
     depends_on:
       - django
-
-volumes:
-  postgres_data:
