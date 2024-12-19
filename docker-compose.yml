@@ -1,4 +1,13 @@
 version: "3.9"
+
+# Для сервера
+# networks:
+#   default:
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.driver.mtu: 1450
+
+
 services:
   rabbitmq:
     image: rabbitmq:3-management
