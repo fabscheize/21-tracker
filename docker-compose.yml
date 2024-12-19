@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -6,50 +7,57 @@ services:
       - "15672:15672"
 
   django:
-    container_name: django
     build:
       context: .
       dockerfile: ./Dockerfile
-    ports:
-      - "8000:8000"
     volumes:
       - ./tracker:/app
-    command: |
-      bash -c "
-        python manage.py collectstatic --noinput && 
-        python manage.py runserver 0.0.0.0:8000
-      "
-    depends_on:
-      - rabbitmq
     environment:
       - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
       - DJANGO_DEBUG=false
+    depends_on:
+      - rabbitmq
+    command: |
+      bash -c "
+        python manage.py collectstatic --noinput &&
+        python manage.py migrate &&
+        gunicorn --bind 0.0.0.0:8000 tracker.wsgi:application
+      "
+    expose:
+      - "8000"
 
   celery:
-    container_name: celery
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: celery -A tracker worker --loglevel=info --pool=prefork
+    command: celery -A tracker worker -l info
     volumes:
       - ./tracker:/app
     depends_on:
-      - django
       - rabbitmq
     environment:
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
 
   celery-beat:
-    container_name: celery-beat
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: celery -A tracker beat --loglevel=info
+    command: celery -A tracker beat --scheduler django_celery_beat.schedulers:DatabaseScheduler -l info
     volumes:
       - ./tracker:/app
     depends_on:
-      - django
       - rabbitmq
     environment:
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672//
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./tracker:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - django
