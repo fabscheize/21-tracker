@@ -2,7 +2,7 @@
 
 ## Бэйдж
 
-[![Pipeline Status](https://https://gitlab.crja72.ru/django/2024/autumn/course/projects/team-14/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django/2024/autumn/course/projects/team-14/pipelines)
+[![Pipeline Status](https://gitlab.crja72.ru/django/2024/autumn/course/projects/team-14/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django/2024/autumn/course/projects/team-14/pipelines)
 
 ## Требования
 
