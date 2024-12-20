@@ -26,6 +26,7 @@ services:
         python manage.py collectstatic --noinput &&
         python manage.py makemigrations &&
         python manage.py migrate &&
+        django-admin compilemessages &&
         if [ \"${DJANGO_DEBUG}\" = \"true\" ]; then
           python manage.py runserver 0.0.0.0:8000;
         else

@@ -15,9 +15,6 @@ class NotificationsForm(django.forms.ModelForm):
         label=django.utils.translation.gettext_lazy(
             "Время начала отправки уведомлений",
         ),
-        help_text=django.utils.translation.gettext_lazy(
-            "В какое время начинать отправлять вам уведомления",
-        ),
     )
     end_time = django.forms.TimeField(
         widget=django.forms.TimeInput(
@@ -25,9 +22,6 @@ class NotificationsForm(django.forms.ModelForm):
         ),
         label=django.utils.translation.gettext_lazy(
             "Время конца отправки уведомлений",
-        ),
-        help_text=django.utils.translation.gettext_lazy(
-            "В какое время перестать отправлять вам уведомления",
         ),
     )
 
@@ -50,9 +44,17 @@ class NotificationsForm(django.forms.ModelForm):
             notifications.models.Notifications.name.field.name: (
                 django.utils.translation.gettext_lazy("Текст уведомления")
             ),
+            notifications.models.Notifications.periodic_time.field.name: (
+                django.utils.translation.gettext_lazy(
+                    "Период отправки уведомления",
+                )
+            ),
         }
         help_texts = {
             notifications.models.Notifications.name.field.name: (
+                django.utils.translation.gettext_lazy("Обязательное поле")
+            ),
+            notifications.models.Notifications.periodic_time.field.name: (
                 django.utils.translation.gettext_lazy("Обязательное поле")
             ),
         }

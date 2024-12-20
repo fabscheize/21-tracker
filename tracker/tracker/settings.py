@@ -2,6 +2,7 @@ import os
 import pathlib
 
 import celery.schedules
+import django.utils.translation
 import dotenv
 
 
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -134,11 +136,20 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
+LANGUAGES = [
+    ("ru", django.utils.translation.gettext_lazy("Russian")),
+    ("en", django.utils.translation.gettext_lazy("English")),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
 LANGUAGE_CODE = "ru-RU"
 
 TIME_ZONE = "UTC"
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

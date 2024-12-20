@@ -1,5 +1,6 @@
 import django.contrib.auth
 import django.contrib.auth.forms
+import django.utils.translation
 
 
 __all__ = ()
@@ -33,8 +34,16 @@ class ChangeForm(django.forms.ModelForm):
             user_model.timezone.field.name,
         ]
         labels = {
-            user_model.first_name.field.name: "Имя",
-            user_model.last_name.field.name: "Фамилия",
-            user_model.email.field.name: "Почта",
-            user_model.timezone.field.name: "Временная зона",
+            user_model.first_name.field.name: (
+                django.utils.translation.gettext_lazy("Имя")
+            ),
+            user_model.last_name.field.name: (
+                django.utils.translation.gettext_lazy("Фамилия")
+            ),
+            user_model.email.field.name: (
+                django.utils.translation.gettext_lazy("Почта")
+            ),
+            user_model.timezone.field.name: (
+                django.utils.translation.gettext_lazy("Временная зона")
+            ),
         }

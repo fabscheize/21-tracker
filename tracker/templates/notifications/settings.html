@@ -1,48 +1,154 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% load i18n %}
 
 {% block title %}
-  {% translate "Настройка" %} – 21
+  {% translate "Настройки" %} – 21
 {% endblock title %}
 
 {% block content %}
-<h1>Настройка уведомлений</h1>
-<div class="container" style="max-width: 900px; margin-left: 0; padding-left: 0;">
-    <!-- Правая колонка с формой --> 
-    <div class="col-md-6">
-      <form action="{% url 'notifications:control' %}" method="post">
-        {% csrf_token %}
-        {% if notification %}
-        <button type="submit" 
-                class="btn {% if notification.is_active %}btn-danger{% else %}btn-success{% endif %}" 
-                id="toggleNotificationsBtn">
-          {% if notification.is_active %}
-            Выключить уведомления по почте
-          {% else %}
-            Включить уведомления по почте
-          {% endif %}
-        </button>
-      {% endif %}
-      </form>
-      <!-- Блок с сообщениями -->
-      <div class="m-1" style="width: 400px;">
-        {% for message in messages %}
-        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
-        </div> 
-        {% endfor %}
+  <div class="container-fluid" style="padding: 1rem;">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1>{% translate "Настройки" %}</h1>
+    </div>
+
+    <div class="g-3 mx-1 my-2">
+      <!-- Профиль -->
+      <div class="p-0 my-3">
+        <h3 class="mb-4 mx-2">{% translate "Профиль" %}</h3>
+
+        <div class="m-2" style="width: 300px;">
+          <a href="{% url "users:profile" %}" class="text-decoration-none">
+            <div class="card-body justify-content-start d-flex align-items-center" style="background:rgb(159, 206, 206); border-radius: 5px; height: 70px">
+              <img src="{% if request.user.profile.image %}{{ request.user.profile.get_image_300x300.url }}{% else %}{% static 'img/no-avatar.jpg' %}{% endif %}" alt="{% translate "Аватар" %}" style="border-radius: 50%; margin: 10px;" width="50" height="50">
+              <p class="fs-4 mb-0" style="color: black;">{{ request.user.username }}</p>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="my-4">
+
+      <!-- Уведомления -->
+      <div class="p-0 my-3">
+        <h3 class="mb-4 mx-2">{% translate "Уведомления" %}</h3>
+
+        <div class="m-2" style="width: 300px;">
+          <form action="{% url 'notifications:control' %}" method="post" class="d-flex">
+            {% csrf_token %}
+            {% if notification %}
+              <button type="submit"
+                      class="flex-fill btn {% if notification.is_active %}btn-outline-danger{% else %}btn-primary{% endif %}"
+                      id="toggleNotificationsBtn">
+                {% if notification.is_active %}
+                  {% translate "Выключить уведомления по почте" %}
+                {% else %}
+                  {% translate "Включить уведомления по почте" %}
+                {% endif %}
+              </button>
+            {% endif %}
+          </form>
+        </div>
+
+        <div class="m-2" style="width: 300px;">
+          <form class="d-flex">
+            <button type="button" class="flex-fill btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#notificationsSettingsModal">
+              {% translate "Наcтроить уведомления" %}
+            </button>
+          </form>
+        </div>
+
+        <div class="m-2" style="width: 300px;">
+          {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Язык -->
+      <div class="p-0 my-3">
+        <h3 class="mb-4 mx-2">{% translate "Язык" %}</h3>
+
+        <div class="m-2 p-0" style="width: 300px;">
+          <form action="{% url 'set_language' %}" method="post" class="d-flex">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            <select name="language" class="form-select flex-fill" style="width: 300px;" onchange="this.form.submit()">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                  {{ language.name_local }}
+                </option>
+              {% endfor %}
+            </select>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно настройки уведомлений -->
+  <div class="modal modal-lg fade" id="notificationsSettingsModal" tabindex="-1" aria-labelledby="notificationsSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="notificationsSettingsModalLabel">{% translate "Наcтроить уведомления" %}</h1>
+          </form>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+
+        <!-- Форма настройки уведомлений -->
         <form method="post" novalidate>
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary">Сохранить</button>
+          <div class="modal-body">
+            {% csrf_token %}
+            {% include "includes/form.html" with form=form %}
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Закрыть" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Сохранить" %}</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
-</div>
 
-{% endblock %}
+  <!-- Если форма невалидна, открываем модальное окно при перезагрузке -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if form.errors %}
+          var myModal = new bootstrap.Modal(document.getElementById('notificationsSettingsModal'));
+          myModal.show();
+        {% endif %}
+
+        var notificationsSettingsModal = document.getElementById('notificationsSettingsModal');
+        var form = notificationsSettingsModal.querySelector('form');
+
+        function resetForm() {
+          form.reset();
+          var invalidFields = form.querySelectorAll('.is-invalid, .is-valid');
+          invalidFields.forEach(function(field) {
+            field.classList.remove('is-invalid', 'is-valid');
+          });
+
+          var errorMessages = form.querySelectorAll('.invalid-feedback, .valid-feedback');
+          errorMessages.forEach(function(message) {
+            message.textContent = '';
+          });
+        }
+
+        notificationsSettingsModal.addEventListener('hidden.bs.modal', function() {
+          resetForm();
+        });
+
+        var closeButton = notificationsSettingsModal.querySelector('[data-bs-dismiss="modal"]');
+        closeButton.addEventListener('click', function() {
+          resetForm();
+        });
+      });
+    </script>
+
+  {% endblock %}

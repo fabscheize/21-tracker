@@ -1,9 +1,12 @@
 import calendar
 import datetime
 
+import babel.dates
 import django.shortcuts
 import django.utils.html
+import django.utils.translation
 import django.views.generic
+
 
 import habits.models
 import statistic.models
@@ -18,9 +21,12 @@ class ProgressView(django.views.generic.TemplateView):
         context = super().get_context_data(**kwargs)
         year = datetime.date.today().year
         month = datetime.date.today().month
-        current_month_year = (
-            datetime.date.today().strftime("%B %Y").capitalize()
-        )
+
+        current_month_year = babel.dates.format_date(
+            datetime.date.today(),
+            "LLLL yyyy",
+            locale=django.utils.translation.get_language(),
+        ).capitalize()
 
         user_habits = habits.models.Habits.objects.filter(
             user=self.request.user,
@@ -134,8 +140,11 @@ class CustomHTMLCalendar(calendar.HTMLCalendar):
         self.today_completed = today_completed
 
     def formatweekday(self, day):
-        weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-        return f"<th class='text-center'>{weekdays[day]}</th>"
+        weekdays = babel.dates.get_day_names(
+            "abbreviated",
+            locale=django.utils.translation.get_language(),
+        )
+        return f"<th class='text-center'>{weekdays[day].capitalize()}</th>"
 
     def formatweekheader(self):
         return (

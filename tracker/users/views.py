@@ -128,7 +128,7 @@ class ProfileView(
 
         django.contrib.messages.success(
             self.request,
-            "Профиль обновлен успешно!",
+            _("Профиль обновлен успешно!"),
         )
 
         return super().form_valid(form)

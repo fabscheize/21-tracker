@@ -20,6 +20,7 @@ urlpatterns = [
         "settings/",
         include("notifications.urls", namespace="notifications"),
     ),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 

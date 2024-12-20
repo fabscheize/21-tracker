@@ -1,5 +1,4 @@
 -r prod.txt
-freezegun==1.5.1
 django-debug-toolbar==4.4.6
 flake8==7.1.1
 flake8-adjustable-complexity==0.0.6
@@ -22,5 +21,6 @@ flake8-quotes==3.4.0
 flake8-scream==0.1.0
 flake8-simplify==0.19.3
 flake8-use-pathlib==0.3.0
+freezegun==1.5.1
 parametrize==0.1.1
 pep8-naming==0.14.1

@@ -1,0 +1,447 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-21 01:00+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: habits/forms.py:26
+msgid "Имя привычки"
+msgstr "Habit name"
+
+#: habits/forms.py:29
+msgid "Цель"
+msgstr "Target"
+
+#: habits/forms.py:34 notifications/forms.py:55 notifications/forms.py:58
+msgid "Обязательное поле"
+msgstr "Required field"
+
+#: habits/forms.py:38
+msgid "Сколько раз выполнять привычку за день (от 1 до 100)"
+msgstr "How many times to perform the habit in a day (from 1 to 100)"
+
+#: habits/forms.py:45
+msgid "Значение должно быть не меньше 1."
+msgstr "The value must be at least 1."
+
+#: habits/forms.py:48
+msgid "Значение должно быть не больше 100."
+msgstr "The value should not exceed 100."
+
+#: notifications/forms.py:16
+msgid "Время начала отправки уведомлений"
+msgstr "Start time for sending notifications"
+
+#: notifications/forms.py:24
+msgid "Время конца отправки уведомлений"
+msgstr "End time for sending notifications"
+
+#: notifications/forms.py:45
+msgid "Текст уведомления"
+msgstr "Notification text"
+
+#: notifications/forms.py:49
+msgid "Период отправки уведомления"
+msgstr "Notifications sending period"
+
+#: notifications/views.py:83
+msgid "Успешно сохранено"
+msgstr "Saved successfully"
+
+#: notifications/views.py:91
+msgid "Интервал времени некорректный"
+msgstr "The time interval is incorrect"
+
+#: templates/base.html:37
+msgid "Калтент"
+msgstr "Content"
+
+#: templates/habits/list.html:6 templates/habits/list.html:12
+#: templates/includes/sidebar.html:22
+msgid "Мои привычки"
+msgstr "My habits"
+
+#: templates/habits/list.html:16 templates/habits/list.html:26
+msgid "Добавить"
+msgstr "Add"
+
+#: templates/habits/list.html:26
+msgid "Жми кнопку"
+msgstr "Hit"
+
+#: templates/habits/list.html:26
+msgid "и начинай совершенствоваться!"
+msgstr "button and start improving!"
+
+#: templates/habits/list.html:38
+msgid "Добавить новую привычку"
+msgstr "Add new habit"
+
+#: templates/habits/list.html:50 templates/notifications/settings.html:111
+msgid "Закрыть"
+msgstr "Close"
+
+#: templates/habits/list.html:51 templates/notifications/settings.html:112
+msgid "Сохранить"
+msgstr "Save"
+
+#: templates/habits/settings.html:6 templates/habits/settings.html:12
+msgid "Редактирование привычки"
+msgstr "Editing a habit"
+
+#: templates/habits/settings.html:17 templates/users/profile.html:34
+msgid "Сохранить изменения"
+msgstr "Save changes"
+
+#: templates/habits/settings.html:21 templates/habits/settings.html:38
+msgid "Удалить привычку"
+msgstr "Delete habit"
+
+#: templates/habits/settings.html:42
+msgid "Вы уверены, что хотите удалить эту привычку безвозвратно?"
+msgstr "Are you sure you want to permanently remove this habit?"
+
+#: templates/habits/settings.html:45
+#: templates/includes/notification_card.html:28
+msgid "Нет, оставить"
+msgstr "No, keep it"
+
+#: templates/habits/settings.html:48
+#: templates/includes/notification_card.html:33
+msgid "Да, удалить"
+msgstr "Yes, delete"
+
+#: templates/homepage/welcome.html:7
+msgid "Главная"
+msgstr "Home"
+
+#: templates/homepage/welcome.html:14
+msgid "Развивай новые привычки, "
+msgstr "Develop new habits, "
+
+#: templates/homepage/welcome.html:16
+msgid "стань лучшей версией себя"
+msgstr "become the best version of yourself"
+
+#: templates/homepage/welcome.html:22
+msgid "Совершенствуйся каждый день с помощью 21."
+msgstr "Improve yourself every day with 21."
+
+#: templates/homepage/welcome.html:28
+msgid "Начать"
+msgstr "Start"
+
+#: templates/includes/habit_card.html:12
+msgid "Выполнено"
+msgstr "Done"
+
+#: templates/includes/habit_card.html:14
+msgid "Выполнить"
+msgstr "Complete"
+
+#: templates/includes/header.html:27 templates/notifications/settings.html:24
+msgid "Аватар"
+msgstr "Avatar"
+
+#: templates/includes/header.html:30
+msgid "Мой профиль"
+msgstr "My profile"
+
+#: templates/includes/header.html:31 templates/includes/header.html:59
+#: templates/users/profile.html:39
+msgid "Выйти"
+msgstr "Log out"
+
+#: templates/includes/header.html:37 templates/users/login.html:25
+msgid "Войти"
+msgstr "Log in"
+
+#: templates/includes/header.html:50 templates/users/logout.html:7
+msgid "Выход"
+msgstr "Log out"
+
+#: templates/includes/header.html:54
+msgid "Вы уверены, что хотите выйти?"
+msgstr "Are you sure you want to log out?"
+
+#: templates/includes/header.html:57
+msgid "Нет, остаться"
+msgstr "No, stay"
+
+#: templates/includes/notification_card.html:10
+#: templates/includes/notification_card.html:20
+msgid "Удалить уведомление"
+msgstr "Delete notification"
+
+#: templates/includes/notification_card.html:24
+msgid "Вы уверены, что хотите удалить это уведомление безвозвратно?"
+msgstr "Are you sure you want to permanently delete this notification?"
+
+#: templates/includes/sidebar.html:34 templates/statistic/progress.html:6
+#: templates/statistic/progress.html:13
+msgid "Прогресс"
+msgstr "Progress"
+
+#: templates/includes/sidebar.html:46 templates/notifications/settings.html:7
+#: templates/notifications/settings.html:13
+msgid "Настройки"
+msgstr "Settings"
+
+#: templates/includes/user_form.html:51
+msgid "Забыли пароль?"
+msgstr "Forgot password?"
+
+#: templates/notifications/settings.html:19 templates/users/profile.html:7
+#: templates/users/profile.html:13
+msgid "Профиль"
+msgstr "Profile"
+
+#: templates/notifications/settings.html:33
+msgid "Уведомления"
+msgstr "Notifications"
+
+#: templates/notifications/settings.html:43
+msgid "Выключить уведомления по почте"
+msgstr "Turn off email notifications"
+
+#: templates/notifications/settings.html:45
+msgid "Включить уведомления по почте"
+msgstr "Turn on email notifications"
+
+#: templates/notifications/settings.html:55
+#: templates/notifications/settings.html:98
+msgid "Наcтроить уведомления"
+msgstr "Set up notifications"
+
+#: templates/notifications/settings.html:72
+msgid "Язык"
+msgstr "Language"
+
+#: templates/statistic/progress.html:16
+msgid "Все привычки"
+msgstr "All habits"
+
+#: templates/statistic/progress.html:29
+msgid "За этот месяц"
+msgstr "This month"
+
+#: templates/statistic/progress.html:42
+msgid "Выполнено на 100"
+msgstr "100"
+
+#: templates/statistic/progress.html:42
+msgid " "
+msgstr " completed "
+
+#: templates/statistic/progress.html:45
+msgid "Сегодня"
+msgstr "Today"
+
+#: templates/statistic/progress.html:53
+msgid "Средний процент выполнения"
+msgstr "Average completion percentage"
+
+#: templates/users/login.html:6
+msgid "Вход"
+msgstr "Log out"
+
+#: templates/users/login.html:11
+msgid "Войти в аккаунт"
+msgstr "Log into account"
+
+#: templates/users/login.html:30
+msgid "Впервые у нас?"
+msgstr "First time?"
+
+#: templates/users/login.html:30 templates/users/signup.html:26
+msgid "Зарегистрироваться"
+msgstr "Sign up"
+
+#: templates/users/logout.html:12
+msgid "Вы вышли и аккаунта"
+msgstr "You are logged out the account"
+
+#: templates/users/logout.html:15
+msgid "Мы будем скучать!"
+msgstr "We will miss you!"
+
+#: templates/users/logout.html:20
+msgid "Войти снова"
+msgstr "Log in again"
+
+#: templates/users/password_change.html:6
+msgid "Изменение пароля"
+msgstr "Changing the password"
+
+#: templates/users/password_change.html:11
+#: templates/users/password_reset_confirm.html:18
+#: templates/users/profile.html:38
+msgid "Изменить пароль"
+msgstr "Change password"
+
+#: templates/users/password_change.html:14
+msgid "Изменить"
+msgstr "Change"
+
+#: templates/users/password_change_done.html:6
+#: templates/users/password_change_done.html:11
+msgid "Пароль успешно изменен"
+msgstr "Password changed successfully"
+
+#: templates/users/password_change_done.html:14
+msgid "Жизнь прекрасна!"
+msgstr "Life is wonderful!"
+
+#: templates/users/password_change_done.html:19
+msgid "Назад в личный кабинет"
+msgstr "Back to profile"
+
+#: templates/users/password_reset.html:6
+msgid "Восстановление пароля"
+msgstr "Password recovery"
+
+#: templates/users/password_reset.html:11
+msgid "Восстановить пароль"
+msgstr "Recover the password"
+
+#: templates/users/password_reset.html:14
+msgid "Забыли пароль? Не беда!"
+msgstr "Forgot your password? No sweat!"
+
+#: templates/users/password_reset.html:17
+msgid ""
+"Введите адрес электронной почты, с которым Вы регистрировались, и мы вышлем "
+"Вам инструкцию для восстановления."
+msgstr ""
+"Enter the email address you registered with, and we will send you "
+"instructions for recovery."
+
+#: templates/users/password_reset.html:20
+msgid "Отправить"
+msgstr "Send"
+
+#: templates/users/password_reset_complete.html:6
+#: templates/users/password_reset_complete.html:11
+msgid "Восстановление пароля завершено"
+msgstr "Password recovery is complete"
+
+#: templates/users/password_reset_complete.html:15
+msgid "Ваш пароль успешно восстановлен. Ура!"
+msgstr "Your password has been successfully restored. Hurray!"
+
+#: templates/users/password_reset_complete.html:20
+msgid "Войти в личный кабинет"
+msgstr "Log in to your profile"
+
+#: templates/users/password_reset_confirm.html:6
+#: templates/users/password_reset_confirm.html:11
+msgid "Подтверждение восстановления пароля"
+msgstr "Confirmation of password recovery"
+
+#: templates/users/password_reset_confirm.html:15
+msgid "Введите новый пароль"
+msgstr "Enter a new password"
+
+#: templates/users/password_reset_done.html:7
+#: templates/users/password_reset_done.html:12
+msgid "Письмо успешно отправлено"
+msgstr "The email was sent successfully"
+
+#: templates/users/password_reset_done.html:16
+msgid ""
+"В ближайшее время Вы получите письмо с инструкцией по восстановлению пароля"
+msgstr "You will receive an email with instructions on password recovery soon"
+
+#: templates/users/password_reset_done.html:18
+msgid "(не забудьте проверить папку спам)"
+msgstr "(don't forget to check the spam folder)"
+
+#: templates/users/password_reset_done.html:23
+msgid "На главную"
+msgstr "To the main page"
+
+#: templates/users/signup.html:7 templates/users/signup.html:12
+msgid "Регистрация"
+msgstr "Sign up"
+
+#: tracker/settings.py:140
+msgid "Russian"
+msgstr ""
+
+#: tracker/settings.py:141
+msgid "English"
+msgstr ""
+
+#: users/backends.py:55
+msgid "Разморозка аккаунта"
+msgstr "Unfreezing your account"
+
+#: users/backends.py:56
+msgid "Ссылка для разморозки: "
+msgstr "Unfreezing link:"
+
+#: users/forms.py:38
+msgid "Имя"
+msgstr "First name"
+
+#: users/forms.py:41
+msgid "Фамилия"
+msgstr "Last name"
+
+#: users/forms.py:44
+msgid "Почта"
+msgstr "Email"
+
+#: users/forms.py:47
+msgid "Временная зона"
+msgstr "Time zone"
+
+#: users/views.py:34
+msgid "Пользователь с такой почтой уже существует"
+msgstr "A user with such an email already exists"
+
+#: users/views.py:54
+msgid "Подтверждение регистрации"
+msgstr "Registration confirmation"
+
+#: users/views.py:55
+msgid "Для активации перейдите по ссылке: "
+msgstr "To activate, follow the link: "
+
+#: users/views.py:65
+msgid "Регистрация прошла успешно!"
+msgstr "Registration was successful!"
+
+#: users/views.py:68
+msgid ""
+"Чтобы активировать свой аккаунт перейдите по ссылке в отправленном нами "
+"письме"
+msgstr "To activate your account, follow the link in the email we sent"
+
+#: users/views.py:82 users/views.py:99
+msgid "Неверный токен."
+msgstr "Invalid token."
+
+#: users/views.py:86 users/views.py:103
+msgid "Ссылка активации истекла."
+msgstr "The activation link has expired."
+
+#: users/views.py:131
+#, fuzzy
+#| msgid "Регистрация прошла успешно!"
+msgid "Профиль обновлен успешно!"
+msgstr "Registration was successful!"
