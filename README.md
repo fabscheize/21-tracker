@@ -35,12 +35,23 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-## 3. Установка зависимостей
+## 3. Установка зависимостей и подготовка .env
 
 Установите зависимости из файла `prod.txt`:
 
 ```bash
 pip install -r requirements/prod.txt
+```
+
+Установите зависимости для тестирования
+
+```bash
+pip install -r requirements/test.txt
+```
+
+Создайте файл .еnv
+```bash
+    cp .env.example .env
 ```
 
 ## 4. Подготовка базы данных и начальные данные
