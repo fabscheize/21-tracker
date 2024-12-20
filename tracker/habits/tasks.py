@@ -12,7 +12,7 @@ __all__ = ()
 
 
 @celery.shared_task
-def perodic_reloadtask():
+def perodic_reload_task():
     working_tz = get_timezones()
     reset_habit_counts(working_tz)
 
